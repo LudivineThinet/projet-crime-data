@@ -357,6 +357,7 @@ def afficher(df_clean, df_mocodes, mo_codes_dict):
         plt.text(x, -15, f"F: {n_f}", ha="center", fontsize=10, color="#E45756")
         plt.text(x, -19, f"M: {n_m}", ha="center", fontsize=10, color="#4C78A8")
 
+    plt.yticks(range(0, 101, 20))
     plt.ylim(bottom=-25)
     plt.subplots_adjust(bottom=0.2)
     st.pyplot(plt.gcf())
