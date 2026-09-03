@@ -1,5 +1,7 @@
 import streamlit as st
 
+st.set_page_config(page_title="Recommandations - Criminalité LA", layout="wide")
+
 st.markdown(
     """
     <style>
@@ -25,4 +27,143 @@ st.markdown(
     </style>
     """,
     unsafe_allow_html=True,
+)
+
+st.title("✅ Recommandations pour l'élu")
+
+st.markdown(
+    "Synthèse des trois analyses (géographie, temporalité, type de crime & victimes), "
+    "organisée par priorité d'action."
+)
+
+st.markdown("---")
+
+# ============================================================
+# Priorité 1 : Central
+# ============================================================
+st.markdown("## 🔴 Priorité 1 — Central : une double urgence")
+
+st.markdown(
+    """
+    Central cumule deux signaux indépendants qui en font la priorité absolue :
+
+    - **Déjà la zone la plus touchée en volume** : 69 674 crimes, soit 6,93 % du
+      total — près de deux fois la part moyenne d'une zone (100 % / 21 ≈ 4,76 %)
+    - **La zone qui se dégrade le plus vite** : +28,8 % entre 2021 et 2023, loin
+      devant les 4 autres zones en alerte (Rampart +21,8 %, Newton +20,2 %,
+      Wilshire +20,1 %, West Valley +16,3 %)
+
+    **Recommandation :** déclencher un renforcement prioritaire (patrouilles,
+    éclairage) sur Central, en ciblant spécifiquement les secteurs 162, 182 et 111
+    qui concentrent l'essentiel des faits de la zone.
+    """
+)
+
+st.markdown("---")
+
+# ============================================================
+# Priorité 2 : Créneau horaire
+# ============================================================
+st.markdown("## 🟠 Priorité 2 — Le créneau 17h-22h, tous les jours")
+
+st.markdown(
+    """
+    - L'heure est **le** facteur déterminant, pas le jour de la semaine : l'écart
+      week-end vs semaine est quasi nul (≈ 0 %)
+    - Le risque grimpe régulièrement au fil de la journée pour culminer entre
+      **17h et 21h**, avec un creux marqué entre 4h et 6h
+    - **1 crime sur 4** se produit la nuit (22h-5h)
+
+    **Recommandation :** concentrer les renforts de patrouille et d'éclairage
+    public sur la tranche 17h-22h, de façon uniforme toute l'année et tous les
+    jours de la semaine — pas de logique de « renfort estival » ou de « renfort
+    week-end », le sujet est le niveau global et l'heure de la journée.
+    """
+)
+
+st.markdown("---")
+
+# ============================================================
+# Priorité 3 : Zones en alerte
+# ============================================================
+st.markdown("## 🟡 Priorité 3 — Les 4 autres zones en alerte")
+
+col1, col2 = st.columns([2, 1])
+
+with col1:
+    st.markdown(
+        """
+        Au-delà de Central, quatre autres zones dépassent le seuil d'alerte de
+        +15 % de variation sur 2021-2023 :
+
+        - **Rampart** : +21,8 %
+        - **Newton** : +20,2 %
+        - **Wilshire** : +20,1 %
+        - **West Valley** : +16,3 %
+
+        Cette hausse n'est pas un phénomène isolé : 20 des 21 zones affichent une
+        variation positive sur la période. C'est une tendance de fond, pas un
+        problème localisé à une seule zone.
+        """
+    )
+
+with col2:
+    st.markdown(
+        """
+        **✅ Cas à étudier : Hollywood**
+
+        Seule zone où la criminalité **recule** sur la période (−5,5 %). À vérifier
+        si c'est le résultat d'une action de terrain efficace (à répliquer ailleurs)
+        ou un simple effet de base statistique, avant de la présenter comme un
+        succès.
+        """
+    )
+
+st.markdown("---")
+
+# ============================================================
+# Priorité 4 : type de crime et victimes
+# ============================================================
+st.markdown("## 🔵 Priorité 4 — Cibler la nature des faits, pas seulement le lieu")
+
+st.markdown(
+    """
+    - **Le vol domine largement** le volume global des crimes enregistrés,
+      loin devant les crimes violents
+    - Parmi les crimes impliquant une arme, c'est la **force physique** (mains,
+      poings, pieds) qui domine très largement — bien avant les armes à feu,
+      contrairement à une idée reçue
+    - **Seuls 9 % des dossiers** aboutissent à une arrestation ; près de 4 dossiers
+      sur 5 restent en enquête en cours
+    - Les circonstances les plus fréquentes signalées par les enquêteurs sont
+      **« suspect inconnu de la victime »** et **« vol des biens de la victime »**,
+      souvent associées entre elles
+
+    **Recommandation :** au-delà du renfort de présence, ces constats plaident pour
+    un investissement dans la **capacité d'enquête et d'élucidation** (le principal
+    point de friction n'est pas l'absence de signalement, mais le faible taux de
+    résolution), et pour des mesures de **prévention situationnelle** contre le vol
+    de véhicules et les cambriolages, qui dominent le volume.
+    """
+)
+
+st.markdown("---")
+
+# ============================================================
+# Synthèse finale
+# ============================================================
+st.markdown("## 📌 En une phrase")
+
+st.info(
+    "**Priorité immédiate : Central, sur le créneau 17h-22h.** "
+    "Priorité secondaire : Rampart, Newton, Wilshire et West Valley, en surveillant "
+    "si la stratégie d'Hollywood peut être répliquée. "
+    "En parallèle, renforcer la capacité d'enquête pour améliorer le taux "
+    "d'élucidation, aujourd'hui très bas (≈ 9 %)."
+)
+
+st.caption(
+    "Sources : analyses Géographie (Joséphine), Temporalité (Suz) et Type de crime "
+    "& Victimes (Ludivine) — dataset LAPD, période 2020-2023 (2024-2025 exclues, "
+    "incomplètes)."
 )
