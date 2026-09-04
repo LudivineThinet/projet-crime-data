@@ -57,7 +57,7 @@ st.markdown(
 @st.cache_data
 def charger_donnees():
     """Charge et prépare les données une seule fois (mise en cache Streamlit)."""
-    df_clean = pd.read_csv("data/df_clean.csv")
+    df_clean = pd.read_parquet("data/df_clean.parquet")
     df_mocodes = pd.read_csv("data/df_mocodes.csv")
     mo_codes_df = pd.read_csv("data/mo_codes.csv", dtype={"mocode": str})
 
