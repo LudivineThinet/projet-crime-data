@@ -15,6 +15,7 @@ géographie, temporalité, et type de crime & victimes.
 - **Temporalité** : la criminalité augmente-t-elle, quels créneaux sont les plus à risque
 - **Type de crime & victimes** : quels crimes dominent, qui sont les victimes, dans
   quelles circonstances
+  Mis à jour par Josie
 
 ## Structure du projet
 
