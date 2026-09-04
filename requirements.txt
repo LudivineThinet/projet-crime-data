@@ -8,3 +8,4 @@ pywaffle
 networkx
 folium
 streamlit-folium
+pyarrow
