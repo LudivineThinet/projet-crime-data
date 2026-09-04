@@ -47,11 +47,13 @@ st.markdown(
     """
     Central cumule deux signaux indépendants qui en font la priorité absolue :
 
-    - **Déjà la zone la plus touchée en volume** : 69 674 crimes, soit 6,93 % du
-      total — près de deux fois la part moyenne d'une zone (100 % / 21 ≈ 4,76 %)
-    - **La zone qui se dégrade le plus vite** : +28,8 % entre 2021 et 2023, loin
-      devant les 4 autres zones en alerte (Rampart +21,8 %, Newton +20,2 %,
-      Wilshire +20,1 %, West Valley +16,3 %)
+    - **Déjà la zone la plus touchée en volume** : 59 457 crimes sur 2020-2023, soit
+      6,78 % du total — nettement au-dessus de la part moyenne d'une zone
+      (100 % / 21 ≈ 4,76 %)
+    - **La zone qui se dégrade le plus vite** : +46,2 % entre 2020 et 2023, loin
+      devant les 9 autres zones en alerte (Rampart +27,8 %, Wilshire +26,1 %,
+      West Valley +22,8 %, Devonshire +22,4 %, Olympic +22,0 %, Newton +19,4 %,
+      Pacific +19,1 %, Topanga +18,9 %, Southwest +17,3 %)
 
     **Recommandation :** déclencher un renforcement prioritaire (patrouilles,
     éclairage) sur Central, en ciblant spécifiquement les secteurs 162, 182 et 111
@@ -93,29 +95,35 @@ col1, col2 = st.columns([2, 1])
 with col1:
     st.markdown(
         """
-        Au-delà de Central, quatre autres zones dépassent le seuil d'alerte de
-        +15 % de variation sur 2021-2023 :
+        Au-delà de Central, neuf autres zones dépassent le seuil d'alerte de
+        +15 % de variation sur 2020-2023 :
 
-        - **Rampart** : +21,8 %
-        - **Newton** : +20,2 %
-        - **Wilshire** : +20,1 %
-        - **West Valley** : +16,3 %
+        - **Rampart** : +27,8 %
+        - **Wilshire** : +26,1 %
+        - **West Valley** : +22,8 %
+        - **Devonshire** : +22,4 %
+        - **Olympic** : +22,0 %
+        - **Newton** : +19,4 %
+        - **Pacific** : +19,1 %
+        - **Topanga** : +18,9 %
+        - **Southwest** : +17,3 %
 
-        Cette hausse n'est pas un phénomène isolé : 20 des 21 zones affichent une
-        variation positive sur la période. C'est une tendance de fond, pas un
-        problème localisé à une seule zone.
+        Cette hausse n'est pas un phénomène isolé : **les 21 zones affichent toutes
+        une variation positive** sur la période, aucune ne s'améliore réellement
+        (la plus stable, Foothill, n'est qu'à +0,8 %). C'est une tendance de fond
+        sur toute la ville, pas un problème localisé à une poignée de zones.
         """
     )
 
 with col2:
     st.markdown(
         """
-        **✅ Cas à étudier : Hollywood**
+        **⚠️ Pas de zone "succès"**
 
-        Seule zone où la criminalité **recule** sur la période (−5,5 %). À vérifier
-        si c'est le résultat d'une action de terrain efficace (à répliquer ailleurs)
-        ou un simple effet de base statistique, avant de la présenter comme un
-        succès.
+        Contrairement à une première lecture sur 2021-2023 seule, aucune zone ne
+        recule réellement sur la période complète 2020-2023. Il n'y a pas de
+        stratégie locale à dupliquer pour l'instant — la priorité reste la
+        même partout : contenir la hausse.
         """
     )
 
@@ -156,8 +164,9 @@ st.markdown("## 📌 En une phrase")
 
 st.info(
     "**Priorité immédiate : Central, sur le créneau 17h-22h.** "
-    "Priorité secondaire : Rampart, Newton, Wilshire et West Valley, en surveillant "
-    "si la stratégie d'Hollywood peut être répliquée. "
+    "Priorité secondaire : les 9 autres zones en alerte (Rampart, Wilshire, West "
+    "Valley, Devonshire, Olympic, Newton, Pacific, Topanga, Southwest) — la hausse "
+    "touche en réalité les 21 zones sans exception, aucune ne recule. "
     "En parallèle, renforcer la capacité d'enquête pour améliorer le taux "
     "d'élucidation, aujourd'hui très bas (≈ 9 %)."
 )

@@ -77,27 +77,27 @@ def afficher(df_clean=None):
     with tab_vol:
         df_sorted = crimes_by_zone.sort_values("nombre_crimes", ascending=True)
         couleurs = [ROUGE if z == "Central" else BLEU_NUIT if z in top10_noms else BLEU_GRIS for z in df_sorted["nom_zone"]]
-        fig, ax = plt.subplots(figsize=(6.75, 5.25))
+        fig, ax = plt.subplots(figsize=(5, 4))
         ax.barh(df_sorted["nom_zone"], df_sorted["nombre_crimes"], color=couleurs)
         ax.set_xlabel("Nombre de crimes")
         ax.set_title("Volume de crimes par zone")
-        st.pyplot(fig)
+        st.pyplot(fig, use_container_width=False)
 
     with tab_part:
         df_sorted = crimes_by_zone.sort_values("part_pct", ascending=True)
         couleurs = [ROUGE if z == "Central" else BLEU_NUIT if z in top10_noms else BLEU_GRIS for z in df_sorted["nom_zone"]]
-        fig, ax = plt.subplots(figsize=(6.75, 5.25))
+        fig, ax = plt.subplots(figsize=(5, 4))
         ax.barh(df_sorted["nom_zone"], df_sorted["part_pct"], color=couleurs)
         min_val, max_val = df_sorted["part_pct"].min(), df_sorted["part_pct"].max()
         ax.axvline(x=min_val, color=BLEU_GRIS, linestyle="--", linewidth=1)
         ax.axvline(x=max_val, color=ROUGE, linestyle="--", linewidth=1)
         ax.set_xlabel("Part du total (%)")
         ax.set_title(f"Part de chaque zone dans le total (Amplitude : {min_val:.2f} % à {max_val:.2f} %)")
-        st.pyplot(fig)
+        st.pyplot(fig, use_container_width=False)
 
     with tab_pareto:
         df_sorted = crimes_by_zone.sort_values("nombre_crimes", ascending=False).reset_index(drop=True)
-        fig, ax1 = plt.subplots(figsize=(9, 4.5))
+        fig, ax1 = plt.subplots(figsize=(6.5, 3.5))
         couleurs = [ROUGE if z == "Central" else BLEU_NUIT if z in top10_noms[:5] else BLEU_ORIGINE for z in df_sorted["nom_zone"]]
         ax1.bar(df_sorted["nom_zone"], df_sorted["nombre_crimes"], color=couleurs, alpha=0.85)
         ax1.set_ylabel("Nombre de crimes", color=BLEU_ORIGINE)
@@ -109,10 +109,10 @@ def afficher(df_clean=None):
         ax2.axhline(y=top5_pct, color="orange", linestyle="--", linewidth=1)
         plt.title("Diagramme de Pareto — Concentration des crimes par zone")
         plt.tight_layout()
-        st.pyplot(fig)
+        st.pyplot(fig, use_container_width=False)
 
     with tab_top:
-        fig, ax = plt.subplots(figsize=(4.5, 3.75))
+        fig, ax = plt.subplots(figsize=(3.5, 3))
         couleurs = [BLEU_NUIT, ROUGE]
         bars = ax.bar(["Top 3 zones", "Top 5 zones"], [top3_pct, top5_pct], color=couleurs, width=0.45)
         for bar in bars:
@@ -121,19 +121,19 @@ def afficher(df_clean=None):
         ax.set_ylabel("Part du total (%)")
         ax.set_title("Concentration de la criminalité dans les principales zones")
         ax.set_ylim(0, top5_pct * 1.25)
-        st.pyplot(fig)
+        st.pyplot(fig, use_container_width=False)
 
     with tab_donut:
         part_central = zone_1["part_pct"]
         part_reste = round(100 - part_central, 2)
-        fig, ax = plt.subplots(figsize=(3.75, 3.75))
+        fig, ax = plt.subplots(figsize=(3, 3))
         ax.pie(
             [part_central, part_reste], autopct="%1.2f%%", pctdistance=0.82, startangle=90,
             colors=[ROUGE, BLEU_NUIT], wedgeprops=dict(width=0.35, edgecolor="white", linewidth=2),
         )
         ax.legend([f"Central ({part_central} %)", f"Autres zones ({part_reste} %)"], loc="lower center", bbox_to_anchor=(0.5, -0.15), ncol=2, frameon=False)
         ax.set_title("Poids de la zone n°1 (Central) dans la criminalité totale")
-        st.pyplot(fig)
+        st.pyplot(fig, use_container_width=False)
 
     with st.expander("Voir le tableau complet des 21 zones"):
         st.dataframe(crimes_by_zone, use_container_width=True, hide_index=True)
@@ -150,16 +150,7 @@ def afficher(df_clean=None):
     # Q2 — Quelles zones se dégradent ou s'améliorent dans le temps ?
     # ============================================================
     st.subheader("Q2 — Quelles zones se dégradent ou s'améliorent dans le temps ?")
-    st.caption("Comparaison 2021 → 2023 — années complètes uniquement")
-
-    with st.expander("ℹ️ Pourquoi 2021-2023 et pas 2021-2024 ?"):
-        st.write(
-            "2024 est incomplète dans ce dataset : le nombre de dossiers enregistrés "
-            "chute progressivement à partir d'avril (délai d'enregistrement), et non "
-            "parce que la criminalité baisse réellement. Comparer 2021 à 2024 brut "
-            "ferait apparaître une fausse baisse sur les 21 zones. L'analyse porte donc "
-            "sur les 4 années complètes du dataset : 2020, 2021, 2022 et 2023."
-        )
+    st.caption("Comparaison 2020 → 2023 — années complètes uniquement")
 
     zone_degradation = zone_evolution.loc[zone_evolution["variation_2020_2023_pct"].idxmax()]
     zone_moins_degradee = zone_evolution.loc[zone_evolution["variation_2020_2023_pct"].idxmin()]
@@ -187,7 +178,7 @@ def afficher(df_clean=None):
     with tab_evo:
         df_sorted2 = zone_evolution.sort_values("variation_2020_2023_pct", ascending=True)
         couleurs2 = [ROUGE if z == zone_degradation["nom_zone"] else BLEU_NUIT if z == zone_moins_degradee["nom_zone"] else BLEU_ORIGINE for z in df_sorted2["nom_zone"]]
-        fig, ax = plt.subplots(figsize=(6.75, 5.25))
+        fig, ax = plt.subplots(figsize=(5, 4))
         ax.barh(df_sorted2["nom_zone"], df_sorted2["variation_2020_2023_pct"], color=couleurs2)
         ax.axvline(x=15, color=ROUGE, linestyle="--", linewidth=1.2, label="Seuil d'alerte (+15 %)")
         ax.set_xlabel("Variation du nombre de crimes, 2020 → 2023 (%)")
@@ -197,10 +188,10 @@ def afficher(df_clean=None):
             f"{zone_moins_degradee['nom_zone']} ({zone_moins_degradee['variation_2020_2023_pct']:+.1f} %)"
         )
         ax.legend()
-        st.pyplot(fig)
+        st.pyplot(fig, use_container_width=False)
 
     with tab_traj:
-        fig, ax = plt.subplots(figsize=(6.75, 5.25))
+        fig, ax = plt.subplots(figsize=(5, 4))
         for _, row in zone_evolution.iterrows():
             if row["nom_zone"] == zone_degradation["nom_zone"]:
                 couleur, largeur, alpha = ORANGE, 2.5, 1.0
@@ -216,11 +207,11 @@ def afficher(df_clean=None):
         ax.set_xlim(2019.7, 2024.2)
         ax.set_ylabel("Nombre de crimes")
         ax.set_title("Trajectoire des zones entre 2020 et 2023")
-        st.pyplot(fig)
+        st.pyplot(fig, use_container_width=False)
 
     with tab_annuel:
         zones_selection = zone_evolution.sort_values("variation_2020_2023_pct", ascending=False).head(5)["nom_zone"].tolist()
-        fig, ax = plt.subplots(figsize=(6.75, 4.5))
+        fig, ax = plt.subplots(figsize=(5, 3.5))
         for zone in zones_selection:
             row = zone_evolution[zone_evolution["nom_zone"] == zone]
             if row.empty:
@@ -232,18 +223,18 @@ def afficher(df_clean=None):
         ax.set_ylabel("Nombre de crimes")
         ax.set_title("Évolution annuelle du nombre de crimes (Top 5 des zones qui se dégradent le plus)")
         ax.legend()
-        st.pyplot(fig)
+        st.pyplot(fig, use_container_width=False)
 
     with tab_alerte:
         alertes = zones_alerte.sort_values("variation_2020_2023_pct", ascending=True)
         couleurs3 = [ROUGE if z == zone_degradation["nom_zone"] else BLEU_ORIGINE for z in alertes["nom_zone"]]
-        fig, ax = plt.subplots(figsize=(5.25, 3.75))
+        fig, ax = plt.subplots(figsize=(4, 3))
         ax.barh(alertes["nom_zone"], alertes["variation_2020_2023_pct"], color=couleurs3, alpha=0.85)
         ax.axvline(x=15, color=ROUGE, linestyle="--", linewidth=1.2, label="Seuil d'alerte (+15 %)")
         ax.set_xlabel("Variation 2020 → 2023 (%)")
         ax.set_title("Zones dépassant le seuil d'alerte (+15 %)")
         ax.legend()
-        st.pyplot(fig)
+        st.pyplot(fig, use_container_width=False)
 
     st.warning(
         "**Zones en alerte (variation > +15 %) :** "
