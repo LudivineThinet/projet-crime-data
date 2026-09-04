@@ -27,6 +27,28 @@ st.markdown(
     [data-testid="stSidebarNav"] a[aria-current="page"] span {
         color: white !important;
     }
+
+    button[data-baseweb="tab"] {
+        font-size: 1.05rem;
+        font-weight: 600;
+        padding: 0.6rem 1.4rem;
+        color: #555;
+    }
+    button[data-baseweb="tab"][aria-selected="true"] {
+        color: #1F3B73 !important;
+        border-bottom: 3px solid #1F3B73 !important;
+    }
+    button[data-baseweb="tab"]:hover {
+        color: #1F3B73 !important;
+        background-color: #F0F4FA;
+    }
+    button[data-baseweb="tab"] p {
+        font-size: 1.05rem;
+        font-weight: 600;
+    }
+    [data-baseweb="tab-highlight"] {
+        background-color: #1F3B73 !important;
+    }
     </style>
     """,
     unsafe_allow_html=True,
