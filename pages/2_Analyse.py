@@ -61,7 +61,7 @@ onglet_geo, onglet_temporel, onglet_victimes = st.tabs([
 ])
 
 with onglet_geo:
-    geographie.afficher(df_clean)
+    geographie.afficher()
 
 with onglet_temporel:
     temporel.afficher(df_clean)
