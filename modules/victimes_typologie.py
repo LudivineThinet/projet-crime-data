@@ -265,13 +265,21 @@ def calculer_mocodes(_df_clean, _df_mocodes):
 
 @st.cache_data
 def calculer_cooccurrence_mocodes(_df_mocodes, top10_mocodes, top10_mocodes_fr):
-    """Matrice de coocurrence : combien de dossiers partagent chaque paire de mocodes (diagonale exclue)."""
-    mocodes_par_dossier = _df_mocodes.groupby("DR_NO")["Mocodes"].apply(list)
-    toutes_les_paires = []
+    """Matrice de coocurrence : combien de dossiers partagent chaque paire de mocodes (diagonale exclue).
+
+    Version optimisée mémoire : on filtre d'abord sur le top 10 (au lieu de
+    combiner tous les mocodes de tous les dossiers, ~5,5M paires en mémoire
+    en même temps que le compteur -> dépassement de RAM sur Streamlit Cloud).
+    """
+    top10_set = set(top10_mocodes)
+    df_filtre = _df_mocodes[_df_mocodes["Mocodes"].isin(top10_set)]
+    mocodes_par_dossier = df_filtre.groupby("DR_NO")["Mocodes"].apply(list)
+
+    compteur_paires = Counter()
     for liste_mocodes in mocodes_par_dossier:
-        if len(liste_mocodes) >= 2:
-            toutes_les_paires.extend(combinations(sorted(set(liste_mocodes)), 2))
-    compteur_paires = Counter(toutes_les_paires)
+        codes_uniques = sorted(set(liste_mocodes))
+        if len(codes_uniques) >= 2:
+            compteur_paires.update(combinations(codes_uniques, 2))
 
     n = len(top10_mocodes)
     xs, ys, tailles, textes = [], [], [], []
@@ -357,7 +365,6 @@ def afficher(df_clean, df_mocodes, mo_codes_dict):
         plt.text(x, -15, f"F: {n_f}", ha="center", fontsize=10, color="#E45756")
         plt.text(x, -19, f"M: {n_m}", ha="center", fontsize=10, color="#4C78A8")
 
-    plt.yticks(range(0, 101, 20))
     plt.ylim(bottom=-25)
     plt.subplots_adjust(bottom=0.2)
     st.pyplot(plt.gcf())
@@ -438,7 +445,7 @@ def afficher(df_clean, df_mocodes, mo_codes_dict):
         ))
         fig_global.update_traces(textinfo="percent+value", textfont=dict(color="white"))
         fig_global.update_layout(
-            title="Statut global des dossiers", height=550, template="plotly_white",
+            title="Statut global des dossiers", height=500, template="plotly_white",
             legend=dict(orientation="h", y=-0.1)
         )
         st.plotly_chart(fig_global, use_container_width=True)
@@ -449,7 +456,7 @@ def afficher(df_clean, df_mocodes, mo_codes_dict):
             marker_colors=["#1F3B73", "#A9C6E8"]
         ))
         fig_adultes.update_traces(textinfo="percent")
-        fig_adultes.update_layout(title="Adultes", height=300, template="plotly_white", margin=dict(t=40, b=10))
+        fig_adultes.update_layout(title="Adultes", height=200, template="plotly_white", margin=dict(t=40, b=10))
         st.plotly_chart(fig_adultes, use_container_width=True)
         st.caption(f"{pct_adultes_clos:.1f}% des dossiers clôturés")
 
@@ -458,7 +465,7 @@ def afficher(df_clean, df_mocodes, mo_codes_dict):
             marker_colors=["#1F3B73", "#A9C6E8"]
         ))
         fig_mineurs.update_traces(textinfo="percent")
-        fig_mineurs.update_layout(title="Mineurs", height=300, template="plotly_white", margin=dict(t=40, b=10))
+        fig_mineurs.update_layout(title="Mineurs", height=200, template="plotly_white", margin=dict(t=40, b=10))
         st.plotly_chart(fig_mineurs, use_container_width=True)
         st.caption(f"{pct_mineurs_clos:.1f}% des dossiers clôturés")
 
